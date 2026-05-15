@@ -68,7 +68,13 @@ const useFilter = ({
     [type]
   );
 
-  const items = data?.pages.flatMap(page => getItems(page)) || [];
+  const items = data?.pages.flatMap(page => {
+    try {
+      return getItems(page) || [];
+    } catch {
+      return [];
+    }
+  }) || [];
   const totalCount = data?.pages[0] ? getTotalCount(data.pages[0]) : 0;
 
   return {
