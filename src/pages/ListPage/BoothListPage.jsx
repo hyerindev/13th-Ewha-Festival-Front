@@ -35,12 +35,14 @@ const BoothListContent = () => {
     queryKey: ['booths'],
     queryFn: params => getBooths(params),
     getNextPageParam: lastPage => {
-      if (lastPage.data.booth?.next) {
+      if (lastPage?.data?.booth?.next) {
         const url = new URL(lastPage.data.booth.next);
         return url.searchParams.get('cursor');
       }
       return undefined;
     },
+    getTotalCount: page => page?.data?.booth_count || 0,
+    getItems: page => page?.data?.booth?.results || [],
     getTotalCount: page => page.data.booth_count || 0,
     getItems: page => page.data.booth.results || [],
     type: 'booth'
